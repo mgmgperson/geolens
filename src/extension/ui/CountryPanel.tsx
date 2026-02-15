@@ -33,7 +33,11 @@ export function CountryPanel(props: {
                 <div key={k} style={ui.cardRow}>
                   <div style={{ opacity: 0.85 }}>{k}</div>
                   <div style={{ fontWeight: 800, textAlign: "right" }}>
-                    {typeof v === "object" ? JSON.stringify(v) : String(v)}
+                    {typeof v === "object" 
+                      ? JSON.stringify(v) 
+                      : typeof v === "number" 
+                        ? v % 1 === 0 ? String(v) : v.toFixed(2)
+                        : String(v)}
                   </div>
                 </div>
               ))}

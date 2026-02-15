@@ -1,16 +1,25 @@
 import { CountryIndex } from "../country/countryIndex";
-import { onGameTokenChange, getClassicGameTokenFromUrl } from "../capture/tokenDetector";
+import { getClassicGameTokenFromUrl, onGameTokenChange } from "../capture/tokenDetector";
 import { onRoundOrGameResultsShown } from "../capture/finishDetector";
 import { ensureDbInitialized } from "../storage/migrations";
 import { importFinishedClassicGame } from "../capture/importFinishedGame";
 import { log, setLogLevel } from "../core/logger";
 import { mountGeoLensUI } from "./mountUi";
+import { onGameStartedUIShown, onPlayAgainButtonDisappeared } from "../capture/startDetector";
 
 (async function main() {
     // "debug" | "info" | "warn" | "error" | "silent"
     setLogLevel("debug");
 
     log.info("Content script boot");
+
+    let currentToken: string | null = getClassicGameTokenFromUrl();
+    log.debug("Initial token:", currentToken);
+
+    onGameTokenChange((t) => {
+        currentToken = t;
+        log.debug("Token changed:", currentToken);
+    });
 
     await ensureDbInitialized();
     log.info("DB initialized");
@@ -24,12 +33,18 @@ import { mountGeoLensUI } from "./mountUi";
 
     log.info("CountryIndex loaded");
 
-    let currentToken: string | null = getClassicGameTokenFromUrl();
-    log.debug("Initial token:", currentToken);
+    onGameStartedUIShown(() => {
+        const t = getClassicGameTokenFromUrl();
+        if (t && t !== currentToken) {
+            currentToken = t;
+            log.debug("Token changed (via game UI):", currentToken);
+        }
+    });
 
-    onGameTokenChange((t) => {
+    onPlayAgainButtonDisappeared(() => {
+        const t = getClassicGameTokenFromUrl();
+        log.debug("Play again disappeared; re-check token:", t);
         currentToken = t;
-        log.debug("Token changed:", currentToken);
     });
 
     onRoundOrGameResultsShown(async () => {
