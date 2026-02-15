@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "GeoLens",
+  "version": "0.1.0",
+  "description": "GeoGuessr country-level accuracy and score stats in an in-page modal.",
+  "host_permissions": ["https://www.geoguessr.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.geoguessr.com/*"],
+      "js": ["build/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["build/assets/geolens_countries.json", "build/assets/geolens.png"],
+      "matches": ["https://www.geoguessr.com/*"]
+    }
+  ],
+  "icons": {
+    "128": "build/assets/geolens.png"
+  }
+}
