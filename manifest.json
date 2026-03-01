@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "GeoLens",
   "version": "0.1.3",
-  "description": "GeoGuessr country-level accuracy and score stats in an in-page modal.",
+  "description": "Interactive GeoGuessr stats overlay with country-level tracking and world map visualization.",
   "host_permissions": ["https://www.geoguessr.com/*"],
   "content_scripts": [
     {
