@@ -1,5 +1,3 @@
-// src/core/logger.ts
-
 export type LogLevel = "debug" | "info" | "warn" | "error" | "silent";
 
 const LEVEL_ORDER: Record<LogLevel, number> = {

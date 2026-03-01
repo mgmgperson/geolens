@@ -74,7 +74,7 @@ export async function normalizeClassicGameV3(params: {
         state: raw?.state,
         mapName: raw?.mapName,
         roundCount: num(raw?.roundCount),
-        raw, // keep for future analytics/debug
+        raw,
         rounds: outRounds,
     };
 }

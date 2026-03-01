@@ -27,7 +27,7 @@ import { onGameStartedUIShown, onPlayAgainButtonDisappeared } from "../capture/s
     mountGeoLensUI();
     log.info("UI mounted");
 
-    const url = chrome.runtime.getURL("build/assets/geolens_countries.json");
+    const url = chrome.runtime.getURL("build/assets/admin0_mapunits_simplified.geojson");
     const countryIndex = new CountryIndex(url);
     await countryIndex.init();
 

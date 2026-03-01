@@ -13,7 +13,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["build/assets/geolens_countries.json", "build/assets/geolens.png"],
+      "resources": ["build/assets/admin0_mapunits_simplified.geojson", "build/assets/geolens.png"],
       "matches": ["https://www.geoguessr.com/*"]
     }
   ],

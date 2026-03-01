@@ -13,8 +13,8 @@ function copyAssetsPlugin() {
       mkdirSync(outAssetsDir, { recursive: true });
 
       copyFileSync(
-        resolve(__dirname, "src/assets/geolens_countries.json"),
-        resolve(outAssetsDir, "geolens_countries.json")
+        resolve(__dirname, "src/assets/admin0_mapunits_simplified.geojson"),
+        resolve(outAssetsDir, "admin0_mapunits_simplified.geojson")
       );
 
       copyFileSync(

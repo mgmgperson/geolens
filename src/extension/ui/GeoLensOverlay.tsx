@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import type { CountryFeatureCollection } from "../../types/geojson";
+import type { CountryAgg } from "../../core/schema";
 import { GeoLensButton } from "./GeoLensButton";
 import { GeoLensModal } from "./GeoLensModal";
 import { WorldMap } from "./WorldMap";
@@ -7,27 +9,37 @@ import { countryAggRepo } from "../../storage/indexedDbRepos";
 import { log } from "../../core/logger";
 import { ui } from "./styles";
 
-type GeoJSONFeatureCollection = any; 
+export type VisualizationMode = "none" | "accuracy" | "score";
 
 export function GeoLensOverlay() {
   const [open, setOpen] = useState(false);
-  const [geojson, setGeojson] = useState<GeoJSONFeatureCollection | null>(null);
+  const [geojson, setGeojson] = useState<CountryFeatureCollection | null>(null);
+  const [allStats, setAllStats] = useState<Map<string, CountryAgg>>(new Map());
+  const [vizMode, setVizMode] = useState<VisualizationMode>("none");
 
   const [selected, setSelected] = useState<{ code: string; name: string } | null>(null);
   const [stats, setStats] = useState<any | null>(null);
   const [loadingStats, setLoadingStats] = useState(false);
 
   useEffect(() => {
-    // load geojson once
+    // load geojson and all stats once
     (async () => {
       try {
-        const url = chrome.runtime.getURL("build/assets/geolens_countries.json");
+        const url = chrome.runtime.getURL("build/assets/admin0_mapunits_simplified.geojson");
         const res = await fetch(url);
         const json = await res.json();
         setGeojson(json);
         log.info("GeoLens geojson loaded");
+
+        const allAggs = await countryAggRepo.getAll();
+        const statsMap = new Map<string, CountryAgg>();
+        for (const agg of allAggs) {
+          statsMap.set(agg.country.toLowerCase(), agg);
+        }
+        setAllStats(statsMap);
+        log.info(`GeoLens loaded stats for ${allAggs.length} countries`);
       } catch (e) {
-        log.error("Failed to load GeoLens geojson:", e);
+        log.error("Failed to load GeoLens data:", e);
       }
     })();
   }, []);
@@ -66,6 +78,9 @@ export function GeoLensOverlay() {
                 geojson={geojson}
                 selectedCode={selected?.code ?? null}
                 onSelect={(c) => setSelected(c)}
+                allStats={allStats}
+                vizMode={vizMode}
+                onVizModeChange={setVizMode}
               />
             )}
           </div>

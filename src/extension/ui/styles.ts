@@ -89,18 +89,11 @@ export const ui = {
     position: "relative",
   } satisfies CSSProperties,
 
-  mapSvg: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 14,
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    display: "block",
-  } satisfies CSSProperties,
-
-  countryPath: (selected: boolean): CSSProperties => ({
+  countryPath: (selected: boolean, choroplethColor?: string | null): CSSProperties => ({
     cursor: "pointer",
-    fill: selected ? "rgba(80,160,255,0.45)" : "rgba(255,255,255,0.10)",
+    fill: selected
+      ? "rgba(80,160,255,0.45)"
+      : choroplethColor ?? "rgba(255,255,255,0.10)",
     stroke: "rgba(255,255,255,0.22)",
     strokeWidth: 0.6,
   }),
@@ -138,4 +131,84 @@ export const ui = {
     border: "1px solid rgba(255,255,255,0.08)",
     marginBottom: 8,
   } satisfies CSSProperties,
+
+    mapControls: {
+    position: "absolute",
+    right: 22,
+    bottom: 22,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    padding: "8px 10px",
+    borderRadius: 12,
+    background: "rgba(0,0,0,0.35)",
+    border: "1px solid rgba(255,255,255,0.10)",
+    color: "white",
+  } satisfies CSSProperties,
+
+  mapBtn: {
+    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.06)",
+    color: "white",
+    borderRadius: 10,
+    padding: "6px 10px",
+    cursor: "pointer",
+    fontWeight: 700,
+    fontSize: 12,
+  } satisfies CSSProperties,
+
+  mapZoomReadout: {
+    fontSize: 12,
+    opacity: 0.9,
+    fontWeight: 700,
+  } satisfies CSSProperties,
+
+  mapSvg: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 14,
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    display: "block",
+
+    cursor: "grab",
+    touchAction: "none",
+  } satisfies CSSProperties,
+
+  mapZoomHint: {
+    position: "absolute",
+    left: 22,
+    top: 22,
+    padding: "8px 10px",
+    borderRadius: 12,
+    background: "rgba(0,0,0,0.35)",
+    border: "1px solid rgba(255,255,255,0.10)",
+    color: "white",
+    fontSize: 12,
+    opacity: 0.85,
+    pointerEvents: "none",
+  } satisfies CSSProperties,
+
+  mapVizControls: {
+    position: "absolute",
+    right: 22,
+    top: 22,
+    display: "flex",
+    gap: 8,
+    padding: "6px 8px",
+    borderRadius: 12,
+    background: "rgba(0,0,0,0.35)",
+    border: "1px solid rgba(255,255,255,0.10)",
+  } satisfies CSSProperties,
+
+  vizBtn: (active: boolean): CSSProperties => ({
+    border: active ? "1px solid rgba(80,160,255,0.5)" : "1px solid rgba(255,255,255,0.14)",
+    background: active ? "rgba(80,160,255,0.2)" : "rgba(255,255,255,0.06)",
+    color: "white",
+    borderRadius: 8,
+    padding: "5px 10px",
+    cursor: "pointer",
+    fontWeight: active ? 700 : 600,
+    fontSize: 11,
+  }),
 };
