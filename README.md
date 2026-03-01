@@ -8,8 +8,8 @@ npm run build
 ```
 You can load the entire folder as an unpacked extension in Chrome or Edge.
 
-## Natural Earth to GeoJSON
-The `countries.geojson` file was generated from the [Natural Earth](https://www.naturalearthdata.com/) dataset using the following command:
+## GeoJSON asset
+All `geojson` files were generated from the [Natural Earth](https://www.naturalearthdata.com/) dataset using the following command:
 ```bash
 mapshaper ne_10m_admin_0_map_units.shp \
   -simplify 15% keep-shapes \
